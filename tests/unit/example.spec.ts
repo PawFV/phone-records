@@ -1,12 +1,21 @@
-import { shallowMount } from "@vue/test-utils";
-import HelloWorld from "@/components/HelloWorld.vue";
+import { mount } from '@vue/test-utils'
+import PhoneRecordsTable from '@/components/PhoneRecordsTable.vue'
+import PrimeVue from 'primevue/config'
+import ToastService from 'primevue/toastservice'
+import store from '@/store'
 
-describe("HelloWorld.vue", () => {
-  it("renders props.msg when passed", () => {
-    const msg = "new message";
-    const wrapper = shallowMount(HelloWorld, {
-      props: { msg },
-    });
-    expect(wrapper.text()).toMatch(msg);
-  });
-});
+describe('PhoneRecordsTable.vue', () => {
+  const wrapper = getWrapper(PhoneRecordsTable)
+  it('Renders: First Name, Last Name, Phone and Email', () => {
+    const TableHeaderText = ['First Name', 'Last Name', 'Phone', 'Email']
+    TableHeaderText.forEach(headerText => expect(wrapper.text()).toContain(headerText))
+  })
+})
+
+function getWrapper(component) {
+  return mount(component, {
+    global: {
+      plugins: [store, PrimeVue, ToastService]
+    }
+  })
+}
